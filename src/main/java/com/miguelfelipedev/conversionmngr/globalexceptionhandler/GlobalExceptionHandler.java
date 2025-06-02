@@ -1,5 +1,6 @@
 package com.miguelfelipedev.conversionmngr.globalexceptionhandler;
 
+import com.miguelfelipedev.conversionmngr.exception.AuthorizationException;
 import com.miguelfelipedev.conversionmngr.exception.HttpServiceException;
 import com.miguelfelipedev.conversionmngr.exception.UnhandledRateException;
 import com.miguelfelipedev.conversionmngr.utils.Constants;
@@ -55,6 +56,16 @@ public class GlobalExceptionHandler {
         response.put(Constants.CURRENT_DATE, LocalDateTime.now());
         logError(response);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<Map<String, Object>> handleAuthorizationException(AuthorizationException e) {
+        Map<String, Object> response = new HashMap<>();
+        response.put(Constants.ERROR, "Authorization Error");
+        response.put(Constants.MESSAGE, e.getMessage());
+        response.put(Constants.CURRENT_DATE, LocalDateTime.now());
+        logError(response);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
 
     private void logError(Map<String, Object> response) {

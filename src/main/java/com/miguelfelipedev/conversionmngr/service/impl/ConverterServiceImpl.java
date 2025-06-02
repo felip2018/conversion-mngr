@@ -10,6 +10,7 @@ import com.miguelfelipedev.conversionmngr.exception.HttpServiceException;
 import com.miguelfelipedev.conversionmngr.exception.UnhandledRateException;
 import com.miguelfelipedev.conversionmngr.service.IConverterService;
 import com.miguelfelipedev.conversionmngr.service.IHttpService;
+import com.miguelfelipedev.conversionmngr.utils.Constants;
 import com.miguelfelipedev.conversionmngr.utils.Utilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -54,7 +55,9 @@ public class ConverterServiceImpl implements IConverterService {
 
     @Override
     public ApiExchangeResponseDto getCurrencyRates(HttpHeaders headers) throws HttpServiceException {
-        ResponseEntity<ApiExchangeResponseDto> apiResponse = httpService.get(apiExchangeUri, headers, ApiExchangeResponseDto.class);
+        String apiKey = headers.getFirst(Constants.X_API_KEY);
+        String uri = String.format("%s?access_key=%s", apiExchangeUri, apiKey);
+        ResponseEntity<ApiExchangeResponseDto> apiResponse = httpService.get(uri, headers, ApiExchangeResponseDto.class);
         return apiResponse.getBody();
     }
 }
