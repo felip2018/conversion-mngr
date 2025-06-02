@@ -1,17 +1,16 @@
 package com.miguelfelipedev.conversionmngr.dto;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 public class CurrencyConverterResposeDto {
     private LocalDateTime convertionDate;
-    private String convertionRate;
+    private Map<String, Double> convertionRate;
     private Double originalAmount;
     private Double convertedAmount;
 }

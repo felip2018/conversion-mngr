@@ -2,15 +2,14 @@ package com.miguelfelipedev.conversionmngr.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Map;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiExchangeResponseDto {
     @JsonProperty("success")

@@ -7,8 +7,10 @@ import com.miguelfelipedev.conversionmngr.dto.CurrencyConverterRequestDto;
 import com.miguelfelipedev.conversionmngr.dto.CurrencyConverterResposeDto;
 import com.miguelfelipedev.conversionmngr.enums.CurrencyEnum;
 import com.miguelfelipedev.conversionmngr.exception.HttpServiceException;
+import com.miguelfelipedev.conversionmngr.exception.UnhandledRateException;
 import com.miguelfelipedev.conversionmngr.service.IConverterService;
 import com.miguelfelipedev.conversionmngr.service.IHttpService;
+import com.miguelfelipedev.conversionmngr.utils.Utilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class ConverterServiceImpl implements IConverterService {
@@ -32,12 +36,25 @@ public class ConverterServiceImpl implements IConverterService {
     private static final Logger logger = LogManager.getLogger(ConverterServiceImpl.class);
 
     @Override
-    public ApiExchangeResponseDto currencyConverter(HttpHeaders headers, CurrencyConverterRequestDto request) throws HttpServiceException, JsonProcessingException {
+    public CurrencyConverterResposeDto convertCurrency(HttpHeaders headers, CurrencyConverterRequestDto request)
+            throws HttpServiceException, UnhandledRateException {
         CurrencyConverterResposeDto response = new CurrencyConverterResposeDto();
-        ResponseEntity<ApiExchangeResponseDto> apiResponse = httpService.get(apiExchangeUri, headers, ApiExchangeResponseDto.class);
-        logger.info("Api response: \n{}", objectMapper.writeValueAsString(apiResponse.getBody()));
-        response.setConvertedAmount(15000.0);
+        ApiExchangeResponseDto exchangeRates = getCurrencyRates(headers);
+        Double rateFrom = Utilities.searchRate(exchangeRates.getRates(), request.getFromCurrency());
+        Double rateTo = Utilities.searchRate(exchangeRates.getRates(), request.getToCurrency());
+        Double amountInEur = request.getAmount() / rateFrom;
+        Map<String, Double> convertionRate = new HashMap<>();
+        convertionRate.put(request.getToCurrency(), rateTo);
         response.setConvertionDate(LocalDateTime.now());
+        response.setOriginalAmount(request.getAmount());
+        response.setConvertionRate(convertionRate);
+        response.setConvertedAmount(amountInEur * rateTo);
+        return response;
+    }
+
+    @Override
+    public ApiExchangeResponseDto getCurrencyRates(HttpHeaders headers) throws HttpServiceException {
+        ResponseEntity<ApiExchangeResponseDto> apiResponse = httpService.get(apiExchangeUri, headers, ApiExchangeResponseDto.class);
         return apiResponse.getBody();
     }
 }
