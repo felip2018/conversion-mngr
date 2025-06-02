@@ -32,16 +32,16 @@ public class ConverterServiceImpl implements IConverterService {
     @Value("${api.exchange.uri}")
     private String apiExchangeUri;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
-    private static final Logger logger = LogManager.getLogger(ConverterServiceImpl.class);
+    @Autowired
+    private Utilities utilities;
 
     @Override
     public CurrencyConverterResposeDto convertCurrency(HttpHeaders headers, CurrencyConverterRequestDto request)
             throws HttpServiceException, UnhandledRateException {
         CurrencyConverterResposeDto response = new CurrencyConverterResposeDto();
         ApiExchangeResponseDto exchangeRates = getCurrencyRates(headers);
-        Double rateFrom = Utilities.searchRate(exchangeRates.getRates(), request.getFromCurrency());
-        Double rateTo = Utilities.searchRate(exchangeRates.getRates(), request.getToCurrency());
+        Double rateFrom = utilities.searchRate(exchangeRates.getRates(), request.getFromCurrency());
+        Double rateTo = utilities.searchRate(exchangeRates.getRates(), request.getToCurrency());
         Double amountInEur = request.getAmount() / rateFrom;
         Map<String, Double> convertionRate = new HashMap<>();
         convertionRate.put(request.getToCurrency(), rateTo);
