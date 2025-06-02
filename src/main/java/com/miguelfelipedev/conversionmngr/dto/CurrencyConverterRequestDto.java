@@ -9,9 +9,11 @@ import lombok.*;
 @Data
 public class CurrencyConverterRequestDto {
 
+    @NotNull(message = "The fromCurrency is mandatory")
     @ValidEnum(enumClass = CurrencyEnum.class, message = "The fromCurrency value is not allowed")
     private String fromCurrency;
 
+    @NotNull(message = "The toCurrency is mandatory")
     @ValidEnum(enumClass = CurrencyEnum.class, message = "The toCurrency value is not allowed")
     private String toCurrency;
 

@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = EnumValidator.class)
-@Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER, ElementType.ANNOTATION_TYPE})
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidEnum {
 
