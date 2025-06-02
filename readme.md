@@ -16,6 +16,9 @@ Conceptos implementados:<br>
 * Validación de inputs de usuario
 * Test unitarios
 
+La documentación de la api la podrá encontrar en:<br>
+``http://localhost:8080/swagger-ui/index.html``
+
 
 ## 1. Clonar repositorio
 Ejecute el comando:<br><br>

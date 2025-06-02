@@ -5,6 +5,7 @@ import com.miguelfelipedev.conversionmngr.dto.CurrencyConverterRequestDto;
 import com.miguelfelipedev.conversionmngr.exception.HttpServiceException;
 import com.miguelfelipedev.conversionmngr.exception.UnhandledRateException;
 import com.miguelfelipedev.conversionmngr.service.IConverterService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,7 @@ public class ConverterController {
     private IConverterService converterService;
 
     @PostMapping("/convert-currency")
+    @Operation(summary = "Realizar la conversión de un monto desde una moneda de origen hacia una moneda de destino.")
     public ResponseEntity<Object> convertCurrency(@RequestHeader HttpHeaders headers,
             @Valid @RequestBody CurrencyConverterRequestDto requestBody)
             throws HttpServiceException, JsonProcessingException, UnhandledRateException {
