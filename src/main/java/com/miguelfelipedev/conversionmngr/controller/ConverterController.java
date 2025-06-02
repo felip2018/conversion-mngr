@@ -5,7 +5,6 @@ import com.miguelfelipedev.conversionmngr.dto.CurrencyConverterRequestDto;
 import com.miguelfelipedev.conversionmngr.exception.HttpServiceException;
 import com.miguelfelipedev.conversionmngr.exception.UnhandledRateException;
 import com.miguelfelipedev.conversionmngr.service.IConverterService;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
