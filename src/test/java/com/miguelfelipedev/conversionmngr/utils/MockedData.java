@@ -1,5 +1,8 @@
 package com.miguelfelipedev.conversionmngr.utils;
 
+import com.miguelfelipedev.conversionmngr.dto.CurrencyConverterResposeDto;
+
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -180,4 +183,14 @@ public class MockedData {
         return rates;
     }
 
+    public static CurrencyConverterResposeDto makeConverterResponseDto() {
+        Map<String, Double> convertionRate = new HashMap<>();
+        convertionRate.put("USD", 1.134758);
+        CurrencyConverterResposeDto response = new CurrencyConverterResposeDto();
+        response.setConvertionDate(LocalDateTime.now());
+        response.setOriginalAmount(15.5);
+        response.setConvertionRate(convertionRate);
+        response.setConvertedAmount(17.720157999999998);
+        return response;
+    }
 }
