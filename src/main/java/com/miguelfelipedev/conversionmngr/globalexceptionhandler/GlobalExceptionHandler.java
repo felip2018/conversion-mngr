@@ -26,7 +26,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleValidationException(MethodArgumentNotValidException e) {
         Map<String, Object> response = new HashMap<>();
         response.put(Constants.ERROR, "Inputs Validation Failed");
-        response.put(Constants.MESSAGE, e.getMessage());
         response.put(Constants.CURRENT_DATE, LocalDateTime.now());
 
         List<String> errors = e.getBindingResult().getFieldErrors().stream()
