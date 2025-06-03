@@ -1,5 +1,6 @@
 package com.miguelfelipedev.conversionmngr.utils;
 
+import com.miguelfelipedev.conversionmngr.dto.ApiExchangeResponseDto;
 import com.miguelfelipedev.conversionmngr.dto.CurrencyConverterResposeDto;
 
 import java.time.LocalDateTime;
@@ -181,6 +182,16 @@ public class MockedData {
         rates.put("ZMW", 30.519027);
         rates.put("ZWL", 367.720066);
         return rates;
+    }
+
+    public static ApiExchangeResponseDto makeApiExchangeResponseDto() {
+        ApiExchangeResponseDto response = new ApiExchangeResponseDto();
+        response.setSuccess(Boolean.TRUE);
+        response.setTimestamp(1748986156L);
+        response.setBase("EUR");
+        response.setDate("2025-06-03");
+        response.setRates(getRates());
+        return response;
     }
 
     public static CurrencyConverterResposeDto makeConverterResponseDto() {
