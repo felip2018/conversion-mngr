@@ -7,7 +7,7 @@ public class Constants {
     public static final String CURRENT_DATE = "currentDate";
     public static final String X_API_KEY = "x-api-key";
 
-    public Constants() {
+    Constants() {
         throw new UnsupportedOperationException("Operations Not supported");
     }
 }
